@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>进口商品超市连锁加盟招商_澳之源全球购</title>
+	<meta name="description" content="" />
+    <meta name="keywords" content="" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-status-bar-style" content="block" />
+	<meta name="fromat-detecition" content="telephone=no" />
+	<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+	<section class="a_layout">
+		<section class="topbar">
+			<header>
+				<div class="logo"><img src="images/logo.jpg" alt=""></div>
+				<div class="navr"><img src="images/navr.gif" alt=""></div>
+				<div class="winDropDown">
+					<ul>
+						<li><img src="images/accsy1.gif" alt=""><a href="/">首页</a></li>
+						<li><img src="images/accsy2.gif" alt=""><a href="/about/gsjj/1.html">公司介绍</a></li>
+						<li><img src="images/accsy3.gif" alt=""><a href="/jmhz/">加盟合作</a></li>
+						<li><img src="images/accsy4.gif" alt=""><a href="/yygl2/">运营管理</a></li>
+						<li><img src="images/accsy5.gif" alt=""><a href="/xinwen/">企业动态</a></li>
+						<li><img src="images/accsy6.gif" alt=""><a href="http://mall.0592azy.com/mobile/">全球购商城</a></li>
+						<li><img src="images/accsy7.gif" alt=""><a href="/about/lxwm/3.html">联系我们</a></li>
+					</ul>
+				</div>	
+
+			</header>
+		</section>
+		<section class="banner"><img src="images/banner.jpg" alt=""></section>
+		<div class="cate-bread">
+		    <span>当前位置</span><a href="http://m.azy0592.cn/">主页</a> &gt; <a href="/jmhz/">加盟合作</a> &gt; </div>
+		<div class="article">
+			<h1>“澳之源全球购”进口商品实体店 开放招商加盟</h1>
+			<div class="artbody"></div>
+			<div class="prn">
+			      <ul>
+			        <li>上一篇：没有了 </li>
+			        <li>下一篇：<a href="/jmhz/2016/1120/34.html">澳之源全球购进口商品诚招微商代理</a> </li>
+			      </ul>
+			</div>
+		</div>
+
+		<footer>
+			<h5>Copyright 2013-2016  闽ICP备16009533号</h5>
+			<div class="relation">
+				<div class="reln">
+					<p>电话：18805927198</p>
+					<p>QQ：871598009</p>
+					<p>地址：中国（福建厦门）自由贸易区</p>
+					<p>公司：厦门澳之源贸易有限公司</p>
+				</div>
+				<div class="flogo"><img src="images/qrcode.jpg" alt=""></div>
+			</div>
+		</footer>
+	</section>
+<div class="modalwin"></div>
+<div class="ftbar">
+	<div class="fnav">
+		<a href="/">首页</a>
+		<a href="http://mall.0592azy.com/mobile/">全球购商城</a>
+		<a href="/jmhz/">加盟合作</a>
+		<a href="http://p.qiao.baidu.com/cps/chat?siteId=10089631&userId=22659828">咨询我们</a>
+	</div>
+</div>
+
+	
+	<script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+	<script>
+		$(function() {
+			var $navr = $('.navr'),
+				$winDropDown = $('.winDropDown'),
+				$modalwin = $('.modalwin') ;
+			$navr.click(function() {
+				if ($winDropDown.is(':visible')) {
+					$winDropDown.slideUp();
+					$modalwin.hide();
+				} else {
+					$winDropDown.slideDown();
+					$modalwin.show();
+				}
+			});
+			$modalwin.click(function() {
+				$winDropDown.slideUp();
+				$modalwin.hide();
+			});
+
+			$('#msgform :input:eq(0)').blur(function() {
+				var val = $(this).val();
+				if ($(this).parent().parent().find("span").length > 0) {
+					$(this).parent().parent().find("span").remove();
+				}
+				if (val.length < 1) {
+					$(this).parent().parent().append('<span class="error">必填</span>');
+				} else if(val.length != 11) {
+					$(this).parent().parent().append('<span class="error">格式错误</span>');
+				} else {
+					$(this).parent().parent().append('<span class="ok">验证通过</span>');
+				}
+			});
+
+			$('#msgform :input:eq(1),#msgform :input:eq(2),#msgform :input:eq(3)').blur(function() {
+				var val = $(this).val();
+				if ($(this).parent().parent().find("span").length > 0) {
+					$(this).parent().parent().find("span").remove();
+				}
+				if (val.length < 1) {
+					$(this).parent().parent().append('<span class="error">必填</span>');
+				
+				} else {
+					$(this).parent().parent().append('<span class="ok">验证通过</span>');
+				}
+			});
+
+			$('#msgform :submit').click(function() {
+				$('#msgform :input:eq(0)').triggerHandler('blur');
+				$('#msgform :input:eq(1)').triggerHandler('blur');
+				$('#msgform :input:eq(2)').triggerHandler('blur');
+				$('#msgform :input:eq(3)').triggerHandler('blur');
+				if ($('#msgform').find('.error').length > 0) {
+					return false;
+				}
+				return true;
+			});
+		})
+	</script>
+</body>
+</html>
