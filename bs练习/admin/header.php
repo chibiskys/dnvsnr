@@ -22,12 +22,12 @@
 				</ul>
 			</li>
 			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+				<a href="./slide_list.php" class="dropdown-toggle" data-toggle="dropdown">
 					轮播管理
 					<b class="caret"></b>
 				</a>
 				<ul class="dropdown-menu">
-					<li><a href="#">轮播添加</a></li>
+					<li><a href="./slide_info.php?act=add">轮播添加</a></li>
 					
 				</ul>
 			</li>

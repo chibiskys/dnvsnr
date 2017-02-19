@@ -52,6 +52,7 @@
 				if (!in_array(strtolower($fileExt), $ext)) {
 					return false;
 				} else {
+					$filename = md5($filename) . date("YmdHis") . "." . $fileExt;
 					if (move_uploaded_file($tmp_name, $uploadfile . $filename)) {
 							return $filename;
 					} else {
