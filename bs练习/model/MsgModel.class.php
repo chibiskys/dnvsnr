@@ -13,6 +13,11 @@
 			return $this->db->getAll($sql);
 		}
 
+		public function getMsgListByCatId($p,$pagesize,$cat_id) {
+			$sql = "SELECT m.*,c.`cat_name`,c.`pid` FROM message AS m LEFT JOIN category AS c ON m.cat_id = c.cat_id where m.cat_id = {$cat_id} ORDER BY m.message_id DESC limit " . ($p-1) * $pagesize . " , " . $pagesize;
+			return $this->db->getAll($sql);
+		}
+
 		public function addMsg($data) {
 			return $this->db->add($this->tbName,$data);
 		}
@@ -23,6 +28,10 @@
 
 		public function getTotal() {
 			return $this->db->getCol("select count(*) as total from message");
+		}
+
+		public function getTotalByCatId($catid) {
+			return $this->db->getCol("select count(*) as total from message where cat_id = " . $catid);
 		}
 
 		public function getMsgInfo($id) {

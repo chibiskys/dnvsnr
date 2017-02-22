@@ -6,65 +6,65 @@
 	<!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
 <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <style>
-	body {padding:100px;}
-</style>
+		body {padding:100px 0 0;}
+		.mt10 {margin-top:15px;margin-right:10px;}
+	</style>	
 </head>
 <body>
 	<?php 
+		session_start();
 		require('./lib/Mysql.class.php');
 		require('./model/MsgModel.class.php');
 		require('./admin/lib.php');
+		require("./model/MemberModel.class.php");
+		require("./model/CatModel.class.php");
+		$memberModel = new Member($mysql);
+		$catModel = new CatModel($mysql);
 		$MsgModel = new MsgModel($mysql);
-		// add
-		if (!empty($_POST['title']) && !empty($_POST['content'])) {
-			$title = htmlspecialchars($_POST['title'],ENT_QUOTES);
-			$content = htmlspecialchars($_POST['content'],ENT_QUOTES);
-			$data = array(
-				'title'=>$title,
-				'content'=>$content,
-				'addtime'=>time()
-				);
-			
-			$bRes = $MsgModel->addMsg($data);
-			if ($bRes) {
-				echo '<script>alert("add success");</script>';
-			} else {
-				echo '<script>alert("add error");</script>';
-			}
-		}
+		
 	 ?>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-6 col-md-push-3">
-				<form action="" method="POST" role="form" class="form-horizontal">
-					<div class="form-group">
-						<div class="col-md-2">
-							<label for="title" class="control-label">标题</label>
-						</div>
-						<div class="col-md-10">
-							<input type="text" name="title" class="form-control" placeholder="请输入标题">
-						</div>
-					</div>
+			<div class="col-md-12">
+				<nav class="navbar navbar-default" role="navigation">
 
-					<div class="form-group">
-						<div class="col-md-2">
-							<label for="content" class="control-label">描述</label>
-						</div>
-						<div class="col-md-10">
-							<textarea name="content" class="form-control" rows="3" placeholder="请输入描述"></textarea>
-						</div>
-					</div>
-				
-					<div class="form-group">
-						<div class="col-md-10 col-md-offset-2">
-							<button type="submit" class="btn btn-primary">提交</button>
-						</div>
-					</div>
-					
-				
-				</form>
-			</div>
+					<ul class="nav navbar-nav">
+						<li class="dropdown">
+							<a href="/">主页</a>
+						</li>
+						<?php 
+							$catList = $catModel->			
+						getCatList();
+							if (!empty($catList)) {
+								foreach ($catList as $v) {
+									?>
+						<li class="dropdown">
+							<a href="./cat.php?id=<?php echo $v['cat_id']?>
+								" class="dropdown-toggle" data-toggle="dropdown">
+								<?php echo $v['cat_name'] ?></a>
+						</li>
+						<?php
+								}
+							}
+						 ?></ul>
+						 <div class="pull-right mt10">
+						 	<?php 
+						 		if (!empty($_SESSION['username'])) {
+						 			?>
+						 			<a href="./user.php">欢迎您,<?php echo !empty($_SESSION['username']) ? $_SESSION['username'] : ''; ?></a> | <a href="./user.php?act=loginout">退出</a>
+						 			<?php
+						 		} else {
+						 			?>
+								 	<a href="./user.php">注册</a> | <a href="./user.php">登陆</a>
+						 			<?php
+						 		}
+						 	 ?>
+						 	
+						 </div>
+					</nav>
+				</div>
 		</div>
+		
 
 		<div class="row">
 
@@ -89,11 +89,11 @@
 						<?php 
 							if (!empty($v["img"]) && file_exists("./upload/" . $v["img"])) {
 						?>
-							<a class="pull-left" href="detail.php?id=<?php echo $v["message_id"]?>"><img class="media-object" style="width:200px;height:150px;" src="upload/<?php echo $v['img']?>" alt=""></a>
+							<a class="pull-left" href="detail.php?cid=<?php echo $v["cat_id"]?>&id=<?php echo $v["message_id"]?>"><img class="media-object" style="width:200px;height:150px;" src="upload/<?php echo $v['img']?>" alt=""></a>
 						<?php
 							} else {
 						?>
-							<a class="pull-left" href="detail.php?id=<?php echo $v["message_id"]?>"><img class="media-object" style="width:200px;" src="images/nopic.jpg" alt=""></a>
+							<a class="pull-left" href="detail.php?cid=<?php echo $v["cat_id"]?>&id=<?php echo $v["message_id"]?>"><img class="media-object" style="width:200px;" src="images/nopic.jpg" alt=""></a>
 						<?php
 							}
 						 ?>

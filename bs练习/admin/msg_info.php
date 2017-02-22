@@ -38,11 +38,16 @@
 </head>
 <body>
 	<?php 
+		error_reporting(0);
 		require("../lib/Mysql.class.php");
 		require("../model/MsgModel.class.php");
+		require("../model/CatModel.class.php");
 		require("../lib/comman.php");
-		$msgModel = new MsgModel($mysql);
 
+		$catModel = new CatModel($mysql);
+		
+
+		$msgModel = new MsgModel($mysql);
 		$act = "";
 		$tipInfo = "";
 		$msgInfo = array();
@@ -55,10 +60,12 @@
 				$content = htmlspecialchars($_POST["content"],ENT_QUOTES);
 				$addtime = time();
 				$filename = upload();
+				$cat_id = $_REQUEST["cat_id"];
 				$msgInfo = array(
 					"title"=>$title,
 					"content"=>$content,
-					"addtime"=>$addtime
+					"addtime"=>$addtime,
+					"cat_id" => $cat_id
 				);
 				if (!empty($filename)) {
 					$msgInfo["img"] = $filename;
@@ -118,6 +125,25 @@
 						<div class="col-md-10"><input name="title" type="text" class="form-control" placeholder="请输入标题" value="<?php if (!empty($msgInfo["title"])) {
 							echo $msgInfo["title"];
 						}?>"></div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-2"><label for="cat_id" class="control-label">分类</label></div>
+						<div class="col-md-10">
+							<select name="cat_id">
+								<option value="0">请选择分类</option>
+								<?php 
+									$catList = $catModel->getCatList();
+									if (!empty($catList)) {
+										foreach ($catList as $v) {
+											?>
+												<option value="<?php echo $v['cat_id']?>" <?php echo $msgInfo["cat_id"] == $v["cat_id"] ? "selected" : "" ?>><?php echo $v["cat_name"]?></option>
+											<?php
+										}
+									}
+								 ?>
+							</select>
+						</div>
 					</div>
 					
 					<?php 
