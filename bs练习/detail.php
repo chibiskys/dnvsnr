@@ -78,7 +78,9 @@
 	 				$page = ceil($total / $pagesize);
 	 				$p = isset($_REQUEST['p']) ? intval($_REQUEST['p']) : 1;
 	 				$commentList = $commentModel->getCommentList($p,$pagesize);
-	 				echo showpage($p,$page);
+	 				if (!empty($commentList)) {
+	 					echo showpage($p,$page);
+	 				}
 	 			 ?>
 	 			
 	 		

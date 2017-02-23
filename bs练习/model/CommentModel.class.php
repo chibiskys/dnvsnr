@@ -18,7 +18,7 @@
 		}
 
 		public function getTotal($id) {
-			return $this->db->getCol("select count(*) from comment where message_id = " . $id);
+			return $this->db->getCol("select count(*) from comment where message_id = " . $id . " and is_show = 1");
 		}
 
 	}
