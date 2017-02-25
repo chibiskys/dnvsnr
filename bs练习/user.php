@@ -11,7 +11,7 @@
 </head>
 <body>
 	<?php 
-		session_start();
+		session_start();	
 		require("./lib/Mysql.class.php");
 		require("./model/MemberModel.class.php");
 		require("./model/CatModel.class.php");
@@ -20,7 +20,8 @@
 		if (isset($_REQUEST["login"])) {
 			$username = htmlspecialchars($_POST['username'],ENT_QUOTES);
 			$userpwd = htmlspecialchars($_POST['userpwd'],ENT_QUOTES);
-			if (!empty($username) && !empty($userpwd)) {
+			$captchas = trim($_POST['captchas']);
+			if (!empty($username) && !empty($userpwd) && strtolower($captchas) == strtolower($_SESSION["captchas"])) {
 				$memberInfo = array('username'=>$username,'userpwd'=>$userpwd);
 				$bRes = $memberModel->login($memberInfo);
 				if ($bRes) {
@@ -114,6 +115,18 @@
 							<input type="password" class="form-control" name="userpwd" placeholder="请输入密码">
 						</div>
 					</div>
+
+					<div class="form-group">
+						<div class="col-md-2">
+							<label for="">验证码</label>
+						</div>
+						<div class="col-md-10">
+							<div class="row">
+								<div class="col-md-3"><input class="form-control" type="text" name="captchas"></div>
+								<div class="col-md-6"><img src="./captchas.php" alt="" onclick="this.src='captchas.php?t=' + Math.random()"></div>
+							</div>
+						</div>
+					</div>
 				
 					
 					<div class="form-group">
@@ -127,6 +140,6 @@
 			</div>
 		</div>
 	</div>
-	
+
 </body>
 </html>
