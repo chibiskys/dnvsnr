@@ -4,7 +4,8 @@
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<style>
-		.paging a {padding:2px 4px;margin-left:4px;border:1px solid #ccc;text-decoration: none;color:#333;font-size: 12px;font-family: '微软雅黑';}
+		.paging a {display:inline-block;padding:2px 4px;margin-left:4px;border:1px solid #ccc;text-decoration: none;color:#333;font-size: 12px;font-family: '微软雅黑';}
+		.paging a.active {background: #F5EEEE;}
 	</style>
 </head>
 <body>
@@ -18,6 +19,8 @@
 		private $page;
 		private $p;
 		private $url;
+		private $step = 8;
+		private $offset = 5;
 
 		public function __construct($total,$pagesize) {
 			$this->total = $total ? $total : 0;
@@ -67,8 +70,30 @@
 			$str .= '<div class="paging">';
 			$str .= $this->firstPage();
 			$str .= $this->prePage();
-			for ($i = 1; $i <= $this->page; $i++) {
-				$str .= '<a href="' . $this->url . 'p=' . $i . '">' . $i . '</a>';
+
+			$start = '';
+			$end = '';
+			if ($this->p < $this->step - 1) {
+				$start = 1;
+				$end = $this->step;
+				if ($end > $this->page) {
+					$end = $this->page;
+				}
+			} else {
+				$start = $this->p - $this->offset;
+				$end = $this->p + $this->step - $this->offset - 1;
+				if ($end > $this->page) {
+					$end = $this->page;
+				}
+			}
+			$active = '';
+			for ($i = $start; $i <= $end; $i++) {
+				if ($i == $this->p) {
+					$active = 'class= "active"'; 
+				} else {
+					$active = '';
+				}
+				$str .= '<a ' . $active . ' href="' . $this->url . 'p=' . $i . '">' . $i . '</a>';
 			}
 			$str .= $this->nextPage();
 			$str .= $this->lastPage();
